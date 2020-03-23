@@ -40,6 +40,8 @@ RTC controller has a built in timer which can be used to wake up the chip after 
 You can wake up the ESP32 from deep sleep using the touch pins. You need to configure the touch pad interrupt before the chip starts deep sleep.   The ```touch_pad_tesp_sleep_get_touchpad_wakeup_status(void)``` function can be used to enable this wake-up source.
 
 ### External wakeup (ext0) and External wakeup (ext1)
+The ext0 allows you to use a pin to wake up the chip ```esp_err_tesp_sleep_enable_ext0_wakeup(gpio_num_t gpio_num, int level)```
+The ext1 allows you to use multiple RTC GPIOs ```esp_err_tesp_sleep_enable_ext1_wakeup(uint64_t mask, esp_sleep_ext1_wakeup_mode_tmode)```
 
 ### Save Data on RTC Memories
 You can save data on the RTC memories. The ESP32 has 8kB SRAM on the RTC part, called RTC fast memory. The data saved here is not erased during deep sleep or light-sleep mode. It is erased when you press the reset button. It is not possible to do dynamic allocation in RTC memory, but you can do static (compile-time) allocation. If you define a global variable with ```RTC_DATA_ATTR``` attribute, the variable will be placed into ```RTC_SLOW_MEM memory```. Also you should be able to use ```RTC_DATA_ATTR``` with struct instances.
