@@ -41,6 +41,10 @@ You can wake up the ESP32 from deep sleep using the touch pins. You need to conf
 
 ### External wakeup (ext0) and External wakeup (ext1)
 
+### Save Data on RTC Memories
+You can save data on the RTC memories. The ESP32 has 8kB SRAM on the RTC part, called RTC fast memory. The data saved here is not erased during deep sleep or light-sleep mode. It is erased when you press the reset button. It is not possible to do dynamic allocation in RTC memory, but you can do static (compile-time) allocation. If you define a global variable with ```RTC_DATA_ATTR``` attribute, the variable will be placed into ```RTC_SLOW_MEM memory```. Also you should be able to use ```RTC_DATA_ATTR``` with struct instances.
+For example : ```RTC_DATA_ATTR int counter = 0;```
+
 ## ESP32 Deep Sleep
 In deep sleep mode, CPUs, most of the RAM, and all the digital peripherals which are clocked from APB_CLK are powered off. The only parts of the chip which can still be powered on are: RTC controller, RTC peripherals (including ULP coprocessor), and RTC memories (slow and fast). The chip consumes around 0.15 mA to 10µA. Along with the CPU, the main memory of the chip is also disabled. So, everything stored in that memory is wiped out and cannot be accessed. If you want to use the data over reboot, store it into the RTC memory by defining a global variable with ```RTC_DATA_ATTR``` attribute. ```esp_deep_sleep_start()``` function can be used to immediately enter deep sleep once wake-up sources are configured. By default, ESP32 will automatically power down the peripherals not needed by the wake-up source. Before entering deep sleep mode, applications must disable WiFi and BT using appropriate calls (```esp_bluedroid_disable()```, ```esp_bt_controller_disable()```, ```esp_wifi_stop()```). 
 
