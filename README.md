@@ -15,4 +15,13 @@ ESP32 Sleep mode is a power-saving state that ESP32 can enter when not in use. W
   > **Deep-sleep mode:** Only the RTC memory and RTC peripherals are powered on. Wi-Fi and Bluetooth connection data are stored in the RTC memory. The ULP co-processor is functional.
   
   > **Hibernation mode:** The internal 8-MHz oscillator and ULP co-processor are disabled. The RTC recovery memory is powered down. Only one RTC timer on the slow clock and certain RTC GPIOs are active.
-  
+
+### Power Consumption by Power Modes
+ | Power mode       | Description           | Power consumption  |
+| ------------- |:-------------:| -----:|
+| Active (RF working) | Wi-Fi/BT Rx and listening | 160 ~ 260mA |
+|Modem-sleep |The CPU is powered on | 20 ~ 68mA |
+| Light-sleep  | ---- |0.8 mA |
+| Deep-sleep  |RTC timer + RTC memory |10µA |
+| Hibernation  | RTC timer only |5µA |
+| Power off  | CHIP_PU is set to low level, the chip is powered off |0.1µA |
