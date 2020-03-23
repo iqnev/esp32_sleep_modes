@@ -26,7 +26,22 @@ ESP32 Sleep mode is a power-saving state that ESP32 can enter when not in use. W
 | Hibernation  | RTC timer only |5µA |
 | Power off  | CHIP_PU is set to low level, the chip is powered off |0.1µA |
 
+Wake up from deep or lights leep modes can be done using several sources:
+- Timer
+
+- Touch pad
+
+- External wakeup(ext0 & ext1)
+
+### Timer Wake Up
+RTC controller has a built in timer which can be used to wake up the chip after a predefined amount of time. The following function can be used to enable deep sleep wakeup using a timer ```esp_err_tesp_sleep_enable_timer_wakeup(uint64_t time_in_us)```
+
+### Touch pad
+You can wake up the ESP32 from deep sleep using the touch pins. You need to configure the touch pad interrupt before the chip starts deep sleep.   The ```touch_pad_tesp_sleep_get_touchpad_wakeup_status(void)``` function can be used to enable this wake-up source.
+
+### External wakeup (ext0) and External wakeup (ext1)
+
 ## ESP32 Deep Sleep
 In deep sleep mode, CPUs, most of the RAM, and all the digital peripherals which are clocked from APB_CLK are powered off. The only parts of the chip which can still be powered on are: RTC controller, RTC peripherals (including ULP coprocessor), and RTC memories (slow and fast). The chip consumes around 0.15 mA to 10µA. Along with the CPU, the main memory of the chip is also disabled. So, everything stored in that memory is wiped out and cannot be accessed. If you want to use the data over reboot, store it into the RTC memory by defining a global variable with ```RTC_DATA_ATTR``` attribute. ```esp_deep_sleep_start()``` function can be used to immediately enter deep sleep once wake-up sources are configured. By default, ESP32 will automatically power down the peripherals not needed by the wake-up source. Before entering deep sleep mode, applications must disable WiFi and BT using appropriate calls (```esp_bluedroid_disable()```, ```esp_bt_controller_disable()```, ```esp_wifi_stop()```). 
 
-
+Wake up from deep sleep and  mode can be done using several sources
