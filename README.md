@@ -25,3 +25,8 @@ ESP32 Sleep mode is a power-saving state that ESP32 can enter when not in use. W
 | Deep-sleep  |RTC timer + RTC memory |10µA |
 | Hibernation  | RTC timer only |5µA |
 | Power off  | CHIP_PU is set to low level, the chip is powered off |0.1µA |
+
+## ESP32 Deep Sleep
+In deep sleep mode, CPUs, most of the RAM, and all the digital peripherals which are clocked from APB_CLK are powered off. The only parts of the chip which can still be powered on are: RTC controller, RTC peripherals (including ULP coprocessor), and RTC memories (slow and fast). The chip consumes around 0.15 mA to 10µA. Along with the CPU, the main memory of the chip is also disabled. So, everything stored in that memory is wiped out and cannot be accessed. If you want to use the data over reboot, store it into the RTC memory by defining a global variable with ```RTC_DATA_ATTR``` attribute. ```esp_deep_sleep_start()``` function can be used to immediately enter deep sleep once wake-up sources are configured. By default, ESP32 will automatically power down the peripherals not needed by the wake-up source. Before entering deep sleep mode, applications must disable WiFi and BT using appropriate calls (```esp_bluedroid_disable()```, ```esp_bt_controller_disable()```, ```esp_wifi_stop()```). 
+
+
