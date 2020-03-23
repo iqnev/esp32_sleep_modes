@@ -41,6 +41,7 @@ You can wake up the ESP32 from deep sleep using the touch pins. You need to conf
 
 ### External wakeup (ext0) and External wakeup (ext1)
 The ext0 allows you to use a pin to wake up the chip ```esp_err_tesp_sleep_enable_ext0_wakeup(gpio_num_t gpio_num, int level)```
+
 The ext1 allows you to use multiple RTC GPIOs ```esp_err_tesp_sleep_enable_ext1_wakeup(uint64_t mask, esp_sleep_ext1_wakeup_mode_tmode)```
 
 ### Save Data on RTC Memories
