@@ -50,5 +50,10 @@ For example : ```RTC_DATA_ATTR int counter = 0;```
 
 ## ESP32 Deep Sleep
 In deep sleep mode, CPUs, most of the RAM, and all the digital peripherals which are clocked from APB_CLK are powered off. The only parts of the chip which can still be powered on are: RTC controller, RTC peripherals (including ULP coprocessor), and RTC memories (slow and fast). The chip consumes around 0.15 mA to 10µA. Along with the CPU, the main memory of the chip is also disabled. So, everything stored in that memory is wiped out and cannot be accessed. If you want to use the data over reboot, store it into the RTC memory by defining a global variable with ```RTC_DATA_ATTR``` attribute. ```esp_deep_sleep_start()``` function can be used to immediately enter deep sleep once wake-up sources are configured. By default, ESP32 will automatically power down the peripherals not needed by the wake-up source. Before entering deep sleep mode, applications must disable WiFi and BT using appropriate calls (```esp_bluedroid_disable()```, ```esp_bt_controller_disable()```, ```esp_wifi_stop()```). 
+You have to remember something very important!!! When the ESP32 enters deep sleep, it turns off the processor that's running your code. The contents of memory and the current state of the processor are lost. So when it restarts out of deep sleep it's as if it just powered up.
+If you use Arduino as framework your ```setup()``` function will run again and will need to do any initialization again. 
+Espressif IoT Development Framework is official development framework for ESP32. In this case your program will run from ```void app_main(void)```. But you have to know that ESP-IDF provides additional opportunities- ESP32 supports running a “deep sleep wake stub” when coming out of deep sleep. This function runs immediately as soon as the chip wakes up - before any normal initialisation, bootloader, or ESP-IDF code has run. 
 
-Wake up from deep sleep and  mode can be done using several sources
+## How to use
+This example should be able to run on any commonly available ESP32 development board without any extra hardwar.
+
