@@ -185,7 +185,7 @@ In light sleep mode, digital peripherals, most of the RAM, and CPUs are clock-ga
 1. I define the wake up source by using the following function ``` esp_sleep_enable_timer_wakeup(3000000);```
 2. The ESP SoC goes to sleep by calling the following function: ```esp_light_sleep_start();```
 3. The ESP SoC wakes up from sleep mode and i determine wake up reason.
-You have to remember that after chip was waked up, the program is executed from where it was last stopped, rather than restart. We can look console log for more information. You can look the my code within the following [file...](https://github.com/iqnev/esp32_sleep_modes/blob/master/deep_sleep_demo_main.c)
+You have to remember that after chip was waked up, the program is executed from where it was last stopped, rather than restart. We can look console log for more information. You can look the my code within the following [file...](https://github.com/iqnev/esp32_sleep_modes/blob/master/light_sleep_demo.c)
 ```
 ��˙��ͥp: 0, *�]A�0�e��SH�HH���0� (POWQ���%UM␕T),boo����3 i␅␕}␙␅MQ_FLASH%==Q�      
 cl�E���0x�,q_dr��x00,�E���0x�,cs0_���0x0bB�}����0x00,w�drv:0�0
